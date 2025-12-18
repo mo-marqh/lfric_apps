@@ -10,7 +10,8 @@
 mkdir -p $TASK_OUTPUT_DIR/results/
 if [ $LUSTRE_FILESYSTEM ]; then
   # Set Lustre striping to maximum for results (performance)
-  lfs setstripe -c -1 $TASK_OUTPUT_DIR/results/
+  lfs setstripe -c 32 -S 4m -p flash $TASK_OUTPUT_DIR/results/
+  lfs setstripe -c 32 -S 4m -p flash $CYLC_SUITE_SHARE_DIR/data/
 fi
 
 # Symbolic link for each potential output file,
