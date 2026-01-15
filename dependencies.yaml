@@ -30,10 +30,10 @@ lfric_apps:
     ref:
 
 lfric_core:
-    source: cazcron2:/home/users/mark.hedley/metofficegit/lfric_core
-    ref:
-    # source: git@github.com:mo-marqh/lfric_core.git
-    # ref: 79e4aa710813d189c2445299238fcd342e10cfba
+    # source: cazcron2:/home/users/mark.hedley/metofficegit/lfric_core
+    # ref:
+    source: git@github.com:mo-marqh/lfric_core.git
+    ref: 63cc5383fddf529e5a878a8b07179b99df780b72
 
 moci:
     source: git@github.com:MetOffice/moci.git
