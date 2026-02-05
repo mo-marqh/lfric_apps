@@ -29,7 +29,6 @@ class vn30_t99(MacroUpgrade):
         # Commands From: rose-meta/lfric-lfric_atm
         """Set segmentation size for Gregory-Rowntree convection kernel"""
         self.add_setting(config, ["namelist:physics", "conv_gr_segment"], "16")
-
         return config, self.reports
 
 
@@ -109,7 +108,6 @@ class vn30_t146(MacroUpgrade):
         self.add_setting(
             config, ["namelist:jules_surface", "l_point_data"], ".false."
         )
-
         return config, self.reports
 
 
@@ -120,7 +118,10 @@ class vn30_t214(MacroUpgrade):
     AFTER_TAG = "vn3.0_t214"
 
     def upgrade(self, config, meta_config=None):
+        # Commands From: rose-meta/lfric-gungho
         """Set segments configuration to true."""
-        self.change_setting_value(config, ["namelist:physics", "configure_segments"], ".true.")
+        self.change_setting_value(
+            config, ["namelist:physics", "configure_segments"], ".true."
+        )
 
         return config, self.reports
