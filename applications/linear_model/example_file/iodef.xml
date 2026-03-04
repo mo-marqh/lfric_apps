@@ -241,7 +241,8 @@
        <field id="restart_m_ci" name="m_ci" long_name="m_ci" unit="kg/kg" operation="instant" domain_ref="checkpoint_Wtheta" />
        <field id="restart_m_s" name="m_s" long_name="m_s" unit="kg/kg" operation="instant" domain_ref="checkpoint_Wtheta" />
        <field id="restart_m_g" name="m_g" long_name="m_g" unit="kg/kg" operation="instant" domain_ref="checkpoint_Wtheta" />
-       </field_group>     </file>
+       </field_group>
+      </file>
 
       <file id="lfric_diag" name="lfric_diag" output_freq="6h" convention="UGRID" enabled=".TRUE.">
 	<field_group group_ref="derived_fields" />
