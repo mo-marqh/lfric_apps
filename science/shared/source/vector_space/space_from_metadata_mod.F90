@@ -60,6 +60,19 @@ module space_from_metadata_mod
 
 contains
 
+  ! remove the fixed string " --> " from the start of a string if it exists
+  ! for XIOS2 XIOS3 compatibility
+  function trim_string_start_arrow(string) result(newstring)
+    character(*), intent(inout) :: string
+    character(:), allocatable :: newstring
+    character(5) :: arrow_prefix = ' --> '
+    if ( string(1:5) == arrow_prefix ) then
+    newstring = string(6:)
+    else
+    newstring = string
+    end if
+  end function trim_string_start_arrow
+
   ! if string is of shape "<prefix>_<suffix>",
   ! split it into prefix and suffix, updating the string
   function try_split(string, suffix, prefix) result(ok)
@@ -274,6 +287,7 @@ contains
 
     ! metadata lookup
     grid_ref = get_field_grid_ref(xios_id)
+    grid_ref = trim_string_start_arrow(grid_ref)
     call split_composite_grid_ref(grid_ref, axis_ref)
     domain_ref = get_field_domain_ref(xios_id)
     if (axis_ref == '') then
