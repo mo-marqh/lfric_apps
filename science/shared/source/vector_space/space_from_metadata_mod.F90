@@ -56,7 +56,12 @@ module space_from_metadata_mod
   character(str_def), parameter :: node_grid                                   &
     = 'node_grid'
 
+#ifdef UNIT_TEST
+  public :: space_from_metadata, trim_string_start_arrow, try_split, &
+            split_composite_grid_ref, get_field_fsenum, get_field_flavour
+#else
   public :: space_from_metadata
+#endif
 
 contains
 
@@ -211,18 +216,8 @@ contains
     end if
   end function get_field_flavour
 
-  ! derive multidata item name from xios metadata
-  function get_field_tile_id(xios_id, axis_ref) result(tile_id)
-    implicit none
-    character(*), intent(in) :: xios_id
-    character(*), intent(in) :: axis_ref
-    character(str_def) :: tile_id
-    tile_id = axis_ref
-  end function get_field_tile_id
-
   !> @brief Space discovery from metadata for field given by XIOS id
   !> @param[in]           xios_id          XIOS id of field
-  !> @param[in]           status           Field status (logging only)
   !> @param[in, optional] mesh_3d          Override 3D mesh
   !> @param[in, optional] mesh_2d          Override 2D mesh
   !> @param[in, optional] force_mesh       Override derived mesh
@@ -233,7 +228,7 @@ contains
   !> @param[in, optional] force_order_v    Override function space order in
   !!                                       vertical
   !> @return                               Function space returned
-  function space_from_metadata(xios_id, status,                            &
+  function space_from_metadata(xios_id,                                    &
                                mesh_3d, mesh_2d, force_mesh,               &
                                force_rad_levels, force_order_h,            &
                                force_order_v, force_ndata) &
@@ -242,7 +237,6 @@ contains
     implicit none
 
     character(*),                       intent(in)  :: xios_id
-    character(*),                       intent(in)  :: status
     type(mesh_type), pointer, optional, intent(in)  :: mesh_3d
     type(mesh_type), pointer, optional, intent(in)  :: mesh_2d
     type(mesh_type), pointer, optional, intent(in)  :: force_mesh
@@ -266,10 +260,6 @@ contains
     type(mesh_type), pointer            :: this_mesh
     type(function_space_type), pointer  :: vector_space
 
-#ifdef UNIT_TEST
-    diag_mesh_3d => mesh_collection%get_mesh('test mesh: planar bi-periodic')
-    diag_mesh_2d => mesh_collection%get_mesh('test mesh: planar bi-periodic')
-#else
     ! if specific meshes have been supplied, override the prime mesh
     if (present(mesh_3d)) then
       diag_mesh_3d => mesh_3d
@@ -283,7 +273,6 @@ contains
       diag_mesh_2d => mesh_collection%get_mesh_variant(diag_mesh_3d, &
                                                        extrusion_id=TWOD)
     endif
-#endif
 
     ! metadata lookup
     grid_ref = get_field_grid_ref(xios_id)
@@ -331,7 +320,7 @@ contains
       if (axis_ref == "") then
         ndata = 1
       else
-        ndata = get_ndata(get_field_tile_id(xios_id, axis_ref))
+        ndata = get_ndata(axis_ref)
       end if
     case (planar)
       ! scalar field on 2d mesh
@@ -341,7 +330,7 @@ contains
       ndata = 1
     case (vanilla_multi)
       ! multidata field on 3d mesh
-      ndata = get_ndata(get_field_tile_id(xios_id, axis_ref))
+      ndata = get_ndata(axis_ref)
     case default
       call log_event("unexpected flavour: " // flavour, log_level_error)
     end select
@@ -365,15 +354,6 @@ contains
       order_v,                                                                &
       fsenum,                                                                 &
       ndata)
-#ifndef UNIT_TEST
-    write(log_scratch_space,                                                  &
-       '("field: ", A, ", ", A, '                                             &
-       // '", mesh: ", A, ", order_h: ", I2, ", order_v: ", I2, '             &
-       // '", fs: ", A, ", flavour: ", A, ", ndata: ", I5)')                  &
-      trim(xios_id), trim(status), trim(this_mesh%get_mesh_name()), order_h,  &
-      order_v, trim(name_from_functionspace(fsenum)), trim(flavour), ndata
-    call log_event(log_scratch_space, log_level_trace)
-#endif
     ! paranoia
     nullify(this_mesh)
 end function space_from_metadata
