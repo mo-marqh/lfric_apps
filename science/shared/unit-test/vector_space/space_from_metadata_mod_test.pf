@@ -24,12 +24,12 @@ module space_from_metadata_mod_test
   implicit none
 
   private
-  public test_test, set_up, test_trim_string_start_arrow, &
-                  test_try_split, test_split_composite_grid, &
-                  test_get_field_fsenum, test_get_field_flavour_vanilla, &
-                  test_get_field_flavour_planar, test_get_field_flavour_tile, &
-                  test_get_field_flavour_radiation, &
-                  test_get_field_flavour_vanilla_multi
+  public set_up, test_trim_string_start_arrow, &
+         test_try_split, test_split_composite_grid, &
+         test_get_field_fsenum, test_get_field_flavour_vanilla, &
+         test_get_field_flavour_planar, test_get_field_flavour_tile, &
+         test_get_field_flavour_radiation, &
+         test_get_field_flavour_vanilla_multi
 
 contains
 
@@ -44,15 +44,6 @@ contains
                fplane=.false., f_lat_deg=0.0_r_def )
 
   end subroutine set_up
-
-  @test
-  subroutine test_test()
-
-    implicit none
-
-    @assertEqual( 1, 1)
-
-  end subroutine test_test
 
   @test
   subroutine test_trim_string_start_arrow()
