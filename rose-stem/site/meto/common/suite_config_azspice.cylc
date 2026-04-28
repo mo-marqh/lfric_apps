@@ -9,7 +9,13 @@
                       'module purge ; '~
                       'module use /home/users/lfricadmin/lmod ; ' %}
 
-{% set azspice_compiler_gnu = 'module load lfric/vn3.1' %}
+{% set azspice_compiler_gnu = 'module load lfric/vn3.1 ; '~
+                              'mkdir -p /var/tmp/conda_local/conda_psyclone-3.2.2 ; '~
+                              'tar -xzf /home/users/mark.hedley/conda_psyclone-3.2.2.tar.gz -C /var/tmp/conda_local/conda_psyclone-3.2.2 ; '~
+                              'export CONDA_PREFIX="" ; '~
+                              'source /var/tmp/conda_local/conda_psyclone-3.2.2/bin/activate ;'~
+                              'echo "which python" ; which python ;'~
+                              'python -c "import psyclone; print(psyclone)"' %}
 
 {% set azspice_coupled_gnu = 'module load xios/2701-oasis ; '~
                              'module load oasis' %}
@@ -34,8 +40,9 @@
             USE_LEGACY_TIMER=true
             USE_TIMING_WRAPPER=true
         [[[directives]]]
-            --gres=tmp:1024
+            --gres=tmp:4096
             --export=NONE
+            --mem-per-cpu=2G
 
     [[AZSPICE_RUN]]
         [[[environment]]]
