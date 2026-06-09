@@ -266,5 +266,8 @@
 {% if "CXI_MATCH_hybrid" not in task_dict %}
     {% do task_dict.update({"CXI_MATCH_hybrid": false}) %}
 {% endif %}
+{% if "CXI_MATCH_software" not in task_dict %}
+    {% do task_dict.update({"CXI_MATCH_software": false}) %}
+{% endif %}
 
 {% do LOG.debug("Finished in templates/default_task_definitions.cylc") %}
