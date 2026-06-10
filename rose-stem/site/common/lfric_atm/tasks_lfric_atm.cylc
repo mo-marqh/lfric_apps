@@ -1206,6 +1206,7 @@
         "restart_write": false,
         "xios_info_level": 1,
         "xios_print_file": true,
+        "log_level": "info",
     }) %}
 {% endif %}
 
