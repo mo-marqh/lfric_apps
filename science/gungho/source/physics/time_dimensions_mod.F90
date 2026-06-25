@@ -11,6 +11,8 @@ module time_dimensions_mod
   use log_mod,                   only: log_event,                             &
                                        log_scratch_space,                     &
                                        log_level_error
+  use lfric_mpi_mod,             only: global_mpi
+  use mpi_f08,  only: mpi_info, mpi_info_create
 #ifdef UM_PHYSICS
   ! This import split to support fparser which gets confused by FPP directives
   ! in the middle of a syntactic unit.
@@ -70,8 +72,14 @@ module time_dimensions_mod
     integer(i_def) :: ierr
     character(str_def) :: time_name
     integer(i_def) :: time_dim
+    integer(i_def) :: mpi_comm_info
+    type(mpi_info) :: info
 
-    ierr = nf90_open(path, NF90_NOWRITE, ncid)
+    call mpi_info_create(info, ierr)
+    ierr = nf90_open(path, NF90_NOWRITE, ncid,                                &
+                    comm=global_mpi%get_mpi_comm(),                           &
+                    info=info%mpi_val)
+
     if (ierr /= 0) then
       write(log_scratch_space,'(A, A, A, I3)')                                &
         'error opening file ', trim(path),                                    &
