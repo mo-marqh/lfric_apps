@@ -30,8 +30,8 @@ lfric_apps:
     ref:
 
 lfric_core:
-   source: git@github.com:MetOffice/lfric_core.git
-   ref: 2026.07.1
+   source: cazcron1:/home/users/mark.hedley/metofficegit/lfric_core
+   ref: manage_iodef_core
 
 moci:
     source: git@github.com:MetOffice/moci.git
