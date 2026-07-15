@@ -8,22 +8,22 @@
   <context id = "gungho_atm">
 
   <!-- Include variable definitions -->
-  <variable_definition src="$METADATA/variable_def_main.xml"/>
+  <variable_definition src="./metadata/variable_def_main.xml"/>
 
   <!-- Include axis definitions -->
-  <axis_definition src="$METADATA/axis_def_main.xml"/>
+  <axis_definition src="./metadata/axis_def_main.xml"/>
 
   <!-- Include domain definitions -->
-  <domain_definition src="$METADATA/domain_def_main.xml"/>
+  <domain_definition src="./metadata/domain_def_main.xml"/>
 
   <!-- Include grid definitions -->
-  <grid_definition src="$METADATA/grid_def_main.xml"/>
+  <grid_definition src="./metadata/grid_def_main.xml"/>
 
   <!-- Include field definitions -->
-  <field_definition src="$METADATA/lfric_dictionary.xml"/>
-  <field_definition src="$METADATA/field_def_diags.xml"/>
-  <field_definition src="$METADATA/field_def_lbc_diags.xml"/>
-  <field_definition src="$METADATA/field_def_initial_diags.xml"/>
+  <field_definition src="./metadata/lfric_dictionary.xml"/>
+  <field_definition src="./metadata/field_def_diags.xml"/>
+  <field_definition src="./metadata/field_def_lbc_diags.xml"/>
+  <field_definition src="./metadata/field_def_initial_diags.xml"/>
 
   <!-- Include file definitions -->
   <file_definition src="./file_def_diags_lam.xml"/>
@@ -38,20 +38,6 @@
 
   </context>
 
-  <context id = "xios">
-    <variable_definition>
-      <variable_group id = "buffer">
-        <variable id = "optimal_buffer_size" type = "string" >performance</variable>
-        <variable id = "buffer_size_factor" type = "double" >$XIOS_BUFFER_SIZE_FACTOR</variable>
-        <variable id = "min_buffer_size" type = "int" >$XIOS_MIN_BUFFER_SIZE</variable>
-      </variable_group>
-
-      <variable_group id = "parameters" >
-        <variable id = "using_server" type = "bool" >true</variable>
-        <variable id = "info_level" type = "int" >$XIOS_INFO_LEVEL</variable>
-        <variable id = "print_file" type="bool">$XIOS_PRINT_FILE</variable>
-      </variable_group>
-    </variable_definition>
-  </context>
+  <context src="./etc/xios.xml"/>
 
 </simulation>

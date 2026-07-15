@@ -93,6 +93,6 @@
 
   </context>
 
-  <context src="etc/xios.xml" />
+  <context src="./etc/xios.xml"/>
 
 </simulation>
