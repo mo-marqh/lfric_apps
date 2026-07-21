@@ -1254,7 +1254,7 @@
         "wallclock": 60,
         "plot_str": "",
         "restart_write": false,
-        "xios_print_file": true,
+        "xios_print_file": ".true.",
     }) %}
 {% endif %}
 
